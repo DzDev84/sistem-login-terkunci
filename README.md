@@ -1,5 +1,7 @@
 # Sistem Login (3x Salah → Terkunci)
 
+**Adesta Eka Saputra** · NIM 25533955 · Kelas E3 — Informatika
+
 Tugas bikin program HTML + CSS + JS murni yang isinya ada percabangan dan
 perulangan, dan keduanya harus nyambung. Jadi saya pilih kasus login yang
 klasik: kalau salah password 3 kali, akunnya dikunci dulu 10 detik.
