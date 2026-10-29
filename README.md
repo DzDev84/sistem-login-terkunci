@@ -1,35 +1,58 @@
-# Sistem Login (3x Salah → Terkunci)
+# Sistem Login — 3× Salah Langsung Terkunci
 
-**Adesta Eka Saputra** · NIM 25533955 · Kelas E3 — Informatika
+**Adesta Eka Saputra**
+NIM 25533955 · Kelas E3 — Informatika
 
-Tugas bikin program HTML + CSS + JS murni yang isinya ada percabangan dan
-perulangan, dan keduanya harus nyambung. Jadi saya pilih kasus login yang
-klasik: kalau salah password 3 kali, akunnya dikunci dulu 10 detik.
+Tugas mata kuliah: bikin program HTML + CSS + JS murni yang di dalamnya ada
+**percabangan** dan **perulangan**, terus dua-duanya harus **berkesinambungan**.
+Saya angkat kasus yang paling gampang dibayangin: form login. Salah password
+3 kali → akunnya dikunci 10 detik, abis itu kebuka sendiri.
+
+Nggak ada library, nggak ada framework. Buka `index.html` aja udah jalan.
+
+## Tampilan Program
+
+Ini screenshot asli dari programnya, bukan mockup.
+
+| Form login | Salah — sisa 2 | Salah — sisa 1 |
+|:--:|:--:|:--:|
+| ![Form login](screenshot/01-form-login.png) | ![Salah, sisa 2 kesempatan](screenshot/02-salah-sisa-2.png) | ![Salah, sisa 1 kesempatan](screenshot/03-salah-sisa-1.png) |
+
+| Akun terkunci (countdown) | Login berhasil |
+|:--:|:--:|
+| ![Akun terkunci](screenshot/04-terkunci.png) | ![Login berhasil](screenshot/05-sukses.png) |
+
+Terakhir, panel **Jejak Logika** — ini yang bikin kesinambungan loop dan
+cabangnya keliatan langsung pas programnya jalan:
+
+![Panel Jejak Logika](screenshot/06-jejak-logika.png)
 
 ## Cara Menjalankan
 
-Tinggal buka `index.html`-nya (double-click aja). Kalau mau lewat server:
+Paling gampang: double-click `index.html`.
+
+Kalau mau lewat server (biar sama kayak pas demo):
 
 ```bash
 python3 -m http.server 8765
-# terus buka http://localhost:8765
+# buka http://localhost:8765
 ```
 
-Biar bisa dibuka dari HP/laptop lain (pakai IP LAN):
+Biar bisa dibuka dari HP atau laptop lain di WiFi yang sama:
 
 ```bash
 python3 -m http.server 8765 --bind 0.0.0.0
-# dari HP buka http://<IP-laptop-saya>:8765
+# dari HP buka http://<IP-laptop>:8765
 ```
 
 Akun buat demo: username `admin`, password `rahasia123`.
 
-Font yang dipakai (Clash Display, Satoshi, Fragment Mono) sudah saya taruh
-di folder `fonts/`, jadi walau lagi gapake internet tampilannya tetap sama.
+Font (Clash Display, Satoshi, Fragment Mono) sudah saya taruh di folder
+`fonts/`, jadi tampilannya tetap sama walau lagi nggak ada internet.
 
 ## Logikanya
 
-Inti programnya sebenernya pola kayak gini:
+Inti programnya pola kayak gini:
 
 ```
 while (percobaanKe < 3 && !sudahBerhasil && !terkunci) {
@@ -43,12 +66,12 @@ while (percobaanKe < 3 && !sudahBerhasil && !terkunci) {
 }
 ```
 
-Jadi tiap kali user menekan tombol Masuk, itu dihitung satu iterasi dari
-`while`-nya (program ini event-driven, jadi `while`-nya "berjalan" lewat
-event submit). Yang bikin nyambung: hasil tiap `if/else` itu dia mengubah
-nilai variabel — entah `percobaanKe` nambah, entah `sudahBerhasil` jadi
-`true` — dan variabel-variabel itulah yang dicek sama kondisi `while`.
-Percabangannya yang menentukan kapan perulangannya berhenti.
+Jadi tiap kali user menekan tombol Masuk, itu dihitung **satu iterasi** dari
+`while`-nya (program ini event-driven, jadi `while`-nya "berjalan" lewat event
+submit). Yang bikin nyambung: hasil tiap `if/else` itu mengubah nilai variabel
+— entah `percobaanKe` nambah, entah `sudahBerhasil` jadi `true` — dan
+variabel-variabel itulah yang dicek sama kondisi `while`. **Percabangannya
+yang menentukan kapan perulangannya berhenti.**
 
 Selain `while` utama, ada dua perulangan lain:
 
@@ -60,13 +83,25 @@ Selain `while` utama, ada dua perulangan lain:
 
 1. Isi username/password sembarang → salah, sisa jatah 2
 2. Salah lagi → "sisa 1 kesempatan", kartunya bergetar
-3. Salah yang ketiga → TERKUNCI, muncul countdown 10 detik,
-   abis itu buka sendiri
+3. Salah yang ketiga → **TERKUNCI**, muncul countdown 10 detik,
+   abis itu kebuka sendiri
 4. Login `admin` / `rahasia123` → berhasil, muncul stempel "Akses Diberikan"
 5. Klik tombol **Jejak Logika** di bawah → keliatan rekaman langkah-langkah
-   programnya: mana bagian perulangan (`[LOOP]`), mana percabangan
-   (`[CABANG]`), dan apa efeknya ke kondisi loop (`[HASIL]`).
-   Dari sini ketauan kenapa loop-nya bisa berhenti.
+   programnya. Dari sini ketauan kenapa loop-nya bisa berhenti.
+
+## Keterangan Teks
+
+Di panel Jejak Logika ada tiga tag warna. Artinya:
+
+| Tag | Arti |
+|-----|------|
+| `[LOOP]` | perulangan (`while` / `for`) sedang jalan |
+| `[CABANG]` | percabangan (`if/else`) lagi ambil keputusan |
+| `[HASIL]` | dampak keputusan cabang ke kondisi loop — ini bukti kesinambungannya |
+
+Inti yang mau ditunjukin: **jatah salah 3× — habis jatah, akun TERKUNCI.
+Hasil setiap `if/else` mengubah variabel yang dibaca kondisi `while`/`for`,
+itulah kesinambungannya.**
 
 ## Catatan
 
@@ -74,13 +109,14 @@ Selain `while` utama, ada dua perulangan lain:
 - Panel Jejak Logika itu papan terpisah yang muncul pas tombolnya diklik,
   dan bisa ditutup lagi lewat tombol "Kembali ke Form".
 - Lengkapnya di `script.js` — saya kasih komentar di hampir tiap blok
-  biar gampang dijelasin.
+  biar gampang dijelasin pas presentasi.
 
-## File
+## Struktur File
 
 | File | Isi |
 |------|-----|
 | `index.html` | Struktur halaman (login / sukses / terkunci + panel log) |
 | `style.css` | Styling-nya semua |
-| `fonts/` | File font (offline) |
 | `script.js` | Logika percabangan + perulangannya |
+| `fonts/` | File font (offline) |
+| `screenshot/` | Foto UI buat README |
