@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistem Login — Percabangan &amp; Perulangan</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="kartu" id="kartu">
+
+    <!-- faceplate atas: judul mesin, tanpa emoji -->
+    <header class="kepala">
+      <h1>Sistem Login</h1>
+    </header>
+
+    <div class="badan">
+
+      <!-- ================= VIEW 1 — FORM LOGIN =================
+           Setiap tekan "Masuk" = SATU ITERASI dari perulangan utama:
+           while (percobaanKe < 3 && !sudahBerhasil && !terkunci) { ... }   -->
+      <section id="view-login">
+        <form id="form-login" novalidate autocomplete="off">
+          <label for="input-username"><span class="no">01</span>Username</label>
+          <input type="text" id="input-username" placeholder="masukkan username" />
+
+          <label for="input-password"><span class="no">02</span>Kata sandi</label>
+          <input type="password" id="input-password" placeholder="masukkan kata sandi" />
+
+          <button type="submit">Masuk &raquo;</button>
+        </form>
+
+        <div class="bar-percobaan">
+          <span>Jatah percobaan</span>
+          <span id="titik-percobaan" aria-label="jatah percobaan"></span>
+        </div>
+
+        <p id="pesan" class="pesan" aria-live="polite"></p>
+
+        <p class="info-akun">Akun demo: <code>admin</code> / <code>rahasia123</code></p>
+      </section>
+
+      <!-- ================= VIEW 2 — SUKSES ================= -->
+      <section id="view-sukses" class="tersembunyi">
+        <div class="stempel">Akses Diberikan</div>
+        <h2>Login Berhasil</h2>
+        <p>
+          Selamat datang, <b id="teks-username">—</b>.<br />
+          <small>Diterima pukul <span id="waktu-sukses">—</span></small>
+        </p>
+        <button type="button" id="tombol-keluar" class="tombol-kecil">Keluar &amp; ulangi demo</button>
+      </section>
+
+      <!-- ============ VIEW 3 — TERKUNCI (perulangan #2: while detik > 0) ============ -->
+      <section id="view-terkunci" class="tersembunyi">
+        <div class="strip-bahaya"></div>
+        <h2>Akun Terkunci</h2>
+        <div class="angka-besar" id="angka-countdown">10</div>
+        <p>detik lagi — membuka otomatis&hellip;</p>
+      </section>
+
+      <!-- ===== NAVIGASI: buka papan JEJAK LOGIKA (kartu terpisah) ===== -->
+      <button type="button" id="tombol-log" class="tombol-log">Jejak Logika &raquo;</button>
+
+    </div>
+  </main>
+
+  <!-- ========== PANEL JEJAK LOGIKA — papan terpisah, buka lewat tombol ========== -->
+  <section class="kartu log-panel tersembunyi" id="panel-log">
+    <header class="kepala">
+      <h1>Jejak Logika</h1>
+    </header>
+    <div class="badan">
+      <ol id="daftar-log"></ol>
+      <button type="button" id="tombol-log-kembali" class="tombol-kecil">&laquo; Kembali ke Form</button>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

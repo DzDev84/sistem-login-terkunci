@@ -1,0 +1,344 @@
+/* ============================================================
+   SISTEM LOGIN — Tugas Percabangan & Perulangan
+   Gaya: brutalist "panel kendali" — kertas + tinta + aksen kobalt.
+   Font di-bundel LOKAL (folder fonts/, demo jalan tanpa internet):
+     - Clash Display (judul, angka countdown, tombol)
+     - Satoshi       (badan teks, label, input)
+     - Fragment Mono (jejak logika, kode, angka kecil teknis)
+   ============================================================ */
+
+@font-face {
+  font-family: "Clash Display";
+  src: url("fonts/clash-display-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/satoshi-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/satoshi-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fragment Mono";
+  src: url("fonts/fragment-mono.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --kertas:      #e9e5da;
+  --kartu:       #f7f4ec;
+  --tinta:       #171614;
+  --kobalt:      #1f4fd8;
+  --kobalt-tua:  #17359e;
+  --kobalt-muda: #7d97f0;
+  --merah:       #c92a1e;
+  --hijau:       #1c6e3c;
+  --amber:       #8a5a00;
+  --kuning:      #f5e0a8;
+  --abu:         #6f6a5c;
+  --garis-halus: #d9d3c4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 28px 14px;
+  font-family: "Satoshi", sans-serif;
+  line-height: 1.6;
+  color: var(--tinta);
+  background-color: var(--kertas);
+  /* pola kertas milimeter — bukan gradasi dekoratif */
+  background-image:
+    linear-gradient(rgba(23, 22, 20, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 22, 20, 0.055) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* ---------- KARTU UTAMA (faceplate mesin) ---------- */
+.kartu {
+  width: 100%;
+  max-width: 480px;
+  background: var(--kartu);
+  border: 3px solid var(--tinta);
+  box-shadow: 10px 10px 0 var(--tinta);
+}
+
+.kepala {
+  background: var(--tinta);
+  color: var(--kartu);
+  padding: 20px 24px 22px;
+  border-bottom: 3px solid var(--tinta);
+  text-align: center; /* judul rata tengah */
+}
+
+.badan { padding: 22px 24px 26px; }
+
+h1 {
+  font-family: "Clash Display", sans-serif;
+  font-size: 2.1rem;
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+h1::before {
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background: var(--kobalt);
+  margin-right: 12px;
+}
+
+/* ---------- FORM ---------- */
+label {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 16px 0 7px;
+}
+label .no { color: var(--kobalt); }
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--tinta);
+  border-radius: 0;
+  background: #fff;
+  color: var(--tinta);
+  font-family: "Satoshi", sans-serif;
+  font-size: 0.92rem;
+}
+input::placeholder { color: #a39b88; }
+input:focus {
+  outline: none;
+  border-color: var(--kobalt);
+  box-shadow: 4px 4px 0 var(--kobalt);
+}
+.input-salah { border-color: var(--merah) !important; }
+
+button {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  border: 2px solid var(--tinta);
+  border-radius: 0;
+  background: var(--tinta);
+  color: var(--kartu);
+  font-family: "Clash Display", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 5px 5px 0 rgba(23, 22, 20, 0.35);
+  transition: background 0.15s, transform 0.05s, box-shadow 0.05s;
+}
+button:hover { background: var(--kobalt); }
+button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 1px 1px 0 rgba(23, 22, 20, 0.35);
+}
+button:focus-visible { outline: 3px solid var(--kobalt); outline-offset: 3px; }
+button:disabled { background: var(--abu); cursor: not-allowed; }
+
+.tombol-kecil {
+  width: auto;
+  padding: 10px 18px;
+  font-size: 0.72rem;
+}
+
+/* tombol masuk ke papan Jejak Logika */
+.tombol-log {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 11px;
+  border: 2px dashed var(--tinta);
+  background: transparent;
+  color: var(--tinta);
+  font-family: "Clash Display", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.tombol-log:hover { background: var(--tinta); color: var(--kartu); }
+.tombol-log:focus-visible { outline: 3px solid var(--kobalt); outline-offset: 3px; }
+
+/* ---------- BAR PERCOBAAN (titik jatah) ---------- */
+.bar-percobaan {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  padding-top: 13px;
+  border-top: 2px dashed var(--tinta);
+  font-family: "Fragment Mono", Consolas, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--abu);
+}
+
+.dot {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-left: 6px;
+  border: 2px solid var(--tinta);
+  background-color: var(--tinta);
+}
+.dot-hidup { background-color: var(--tinta); }
+.dot-mati {
+  background-color: var(--kartu);
+  background-image:
+    linear-gradient(45deg,  transparent 43%, var(--merah) 43%, var(--merah) 57%, transparent 57%),
+    linear-gradient(-45deg, transparent 43%, var(--merah) 43%, var(--merah) 57%, transparent 57%);
+}
+
+/* ---------- PESAN STATUS ---------- */
+.pesan {
+  min-height: 22px;
+  margin-top: 14px;
+  padding: 9px 12px;
+  border: 2px solid transparent;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.pesan:empty { border-color: transparent; background: transparent; }
+.pesan-error  { color: var(--merah);      border-color: var(--merah); background: #fbeae7; }
+.pesan-sukses { color: var(--hijau);      border-color: var(--hijau); background: #e8f1e7; }
+.pesan-info   { color: var(--kobalt-tua); border-color: var(--kobalt); background: #e8edfb; }
+.pesan-kuning { color: var(--amber);      border-color: var(--amber); background: var(--kuning); }
+
+.info-akun {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 2px dashed var(--tinta);
+  font-family: "Fragment Mono", Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: var(--abu);
+}
+code {
+  background: var(--tinta);
+  color: var(--kuning);
+  padding: 1px 7px;
+  font-family: "Fragment Mono", Consolas, monospace;
+  font-size: 0.9em;
+}
+
+/* ---------- VIEW SUKSES / TERKUNCI ---------- */
+.tersembunyi { display: none; }
+#view-sukses, #view-terkunci { text-align: center; padding-top: 4px; }
+#view-sukses h2, #view-terkunci h2 {
+  font-family: "Clash Display", sans-serif;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+#view-sukses p, #view-terkunci p { color: var(--abu); font-size: 0.85rem; }
+#view-sukses b { color: var(--hijau); text-transform: uppercase; }
+#view-terkunci b { color: var(--merah); }
+#view-sukses .tombol-kecil { display: block; margin: 18px auto 0; }
+
+/* stempel "akses diberikan" — gaya cap dokumen, bukan ikon emoji */
+.stempel {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 7px 16px;
+  border: 3px solid var(--hijau);
+  color: var(--hijau);
+  font-family: "Clash Display", sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+}
+
+/* strip peringatan kerja — gaya papan industri */
+.strip-bahaya {
+  height: 16px;
+  margin-bottom: 18px;
+  border: 2px solid var(--tinta);
+  background: repeating-linear-gradient(-45deg, #f2c400 0 12px, var(--tinta) 12px 24px);
+}
+
+.angka-besar {
+  font-family: "Clash Display", sans-serif;
+  font-size: 4.2rem;
+  line-height: 1;
+  color: var(--merah);
+  margin: 6px 0 4px;
+}
+
+/* ---------- ANIMASI SHAKE SAAT SALAH ---------- */
+@keyframes guncang {
+  10%, 90%       { transform: translateX(-2px); }
+  20%, 80%       { transform: translateX(4px); }
+  30%, 50%, 70%  { transform: translateX(-6px); }
+  40%, 60%       { transform: translateX(6px); }
+}
+.guncang { animation: guncang 0.5s; }
+
+@keyframes masuk {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- JEJAK LOGIKA (PANEL TERPISAH) ---------- */
+.log-panel {
+  max-width: 480px;
+  margin-top: 26px;
+}
+/* saat keduanya tampil (login + klik log) — susun vertikal rapi */
+body.tumpuk { display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+.log-panel .badan { padding: 18px 20px 20px; }
+#panel-log h1 { font-size: 1.35rem; }
+#panel-log h1::before { width: 10px; height: 10px; margin-right: 10px; }
+
+#daftar-log {
+  list-style: none;
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: "Fragment Mono", Consolas, monospace;
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+#daftar-log li {
+  padding: 6px 9px;
+  margin-bottom: 6px;
+  background: #fff;
+  border: 1px solid var(--garis-halus);
+  border-left: 5px solid var(--abu);
+  color: #3d3a31;
+  animation: masuk 0.22s ease;
+}
+.log-loop   { border-left-color: var(--kobalt); }
+.log-cabang { border-left-color: #c77d1b; }
+.log-hasil  { border-left-color: var(--hijau); }
