@@ -8,7 +8,8 @@ percabangan dan perulangan, terus dua-duanya mesti berkesinambungan. Saya
 ambil kasus form login karena paling gampang dibayangin. Salah password 3
 kali, akunnya kekunci 10 detik, abis itu kebuka sendiri.
 
-Nggak pakai library, nggak pakai framework. Buka `index.html` udah jalan.
+Semuanya ditulis manual, soalnya kalau pakai framework nanti dosennya nanya
+ternyata bukan saya yang bikin. Buka `index.html` di browser langsung jalan.
 
 ## Tampilannya
 
